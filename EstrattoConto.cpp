@@ -4,8 +4,12 @@
 
 #include "EstrattoConto.h"
 
-EstrattoConto::EstrattoConto(float value) : value(value) {
-    id++;
+EstrattoConto::EstrattoConto(int id, float value) : id(id), value(value) {
+    if (value < 0) {
+        tipo = "prelievo";
+    } else {
+        tipo = "deposito";
+    }
 }
 
 float EstrattoConto::getValue() const {
@@ -14,4 +18,8 @@ float EstrattoConto::getValue() const {
 
 int EstrattoConto::getId() const {
     return id;
+}
+
+string EstrattoConto::getTipo() const{
+    return tipo;
 }

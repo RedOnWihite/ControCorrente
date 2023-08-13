@@ -30,6 +30,8 @@ public:
 
     void stampaEC();
 
+    void eliminaTransazione(int id);
+
     string getName();
     int getId();
     float getFondi();

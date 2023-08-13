@@ -10,9 +10,10 @@ Conto::Conto(const string& nomeUtente)
         : nome(nomeUtente), id(generaNuovoId()), fondi(0) {
     namespace fs = std::filesystem;
     if (fs::create_directory(nomeUtente)) {
-        std::cout << "Il conto è stato creato con successo\n";
+        std::cout << "Il conto e' stato creato con successo\n";
     } else {
         std::cout << "Errore nella creazione del conto\n";
+        exit(0);
     }
 
     salvaDatiSuFile(nomeUtente);
@@ -46,8 +47,8 @@ void Conto::caricaDatiDaFile(const std::string& nomeFile) {
     float value;
 
     // Continua a leggere dal file finché ci sono dati disponibili
-    while (estrattoContoFile >> value) {
-        record.push_back(value); // Aggiungi un nuovo oggetto EstrattoConto al vettore record
+    while (estrattoContoFile >> id >> value) {
+        record.push_back(EstrattoConto(id, value)); // Crea e aggiungi un nuovo oggetto EstrattoConto al vettore record
     }
 
     estrattoContoFile.close();
@@ -79,24 +80,41 @@ void Conto::salvaDatiSuFile(const std::string &nomeFile) const {
     for (const auto& elemento : record) {
         estrattoContoFile << elemento.getId() << "\n";
         estrattoContoFile << elemento.getValue() << "\n";
+        estrattoContoFile << elemento.getTipo() << "\n";
     }
 
     estrattoContoFile.close();
 }
 
 void Conto::transazione(float amount){
-    if(amount<0){
-        cout<<"è stato prelevato: "<<amount<<" soldi dal conto"<<endl;
-    } else{
-        cout<<"è stato depositato: "<<amount<<" soldi dal conto"<<endl;
+    if (amount < 0) {
+        cout << "e' stato prelevato: " << -amount << " soldi dal conto" << endl;
+    } else {
+        cout << "e' stato depositato: " << amount << " soldi sul conto" << endl;
     }
-    fondi=fondi+amount;
-    record.push_back(amount);
+    fondi += amount;
+
+    // Incrementa l'ID
+    ++id;
+
+    // Crea un nuovo oggetto EstrattoConto con l'ID e il valore aggiornati, e aggiungilo al vettore record
+    record.push_back(EstrattoConto(id, amount));
 }
 
 void Conto::stampaEC() {
     for (const auto& elemento : record) {
-        std::cout << "ID: " << elemento.getId() << ", Valore: " << elemento.getValue() << std::endl;
+        std::cout << "ID: " << elemento.getId() << ", Valore: " << elemento.getValue() << ", tipo: " << elemento.getTipo() <<std::endl;
+    }
+}
+
+void Conto::eliminaTransazione(int id) {
+    auto it = record.begin();
+    while (it != record.end()) {
+        if (it->getId() == id) {
+            it = record.erase(it); // Elimina l'elemento e sposta l'iteratore all'elemento successivo
+        } else {
+            ++it; // Passa all'elemento successivo
+        }
     }
 }
 
