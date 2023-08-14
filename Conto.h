@@ -14,11 +14,9 @@ using namespace std;
 
 class Conto {
 public:
-    Conto(const string& nomeUtente);
+    Conto(const string& nomeUtente, const string& password);
 
     void setNome(const std::string& nuovoNome);
-
-    void setId(int nuovoId);
 
     void setFondi(float nuoviFondi);
 
@@ -28,19 +26,22 @@ public:
 
     void eliminaTransazione(int id);
 
+    void salvaDatiSuFile(const std::string &nomeFile) const;
+
     string getName();
+    string getPassword();
     int getId();
     float getFondi();
 
 private:
     string nome;
+    string password;
     int id;
     float fondi=0;
     vector<EstrattoConto> record;
 
     int generaNuovoId();
     void caricaDatiDaFile(const std::string& nomeFile);
-    void salvaDatiSuFile(const std::string &nomeFile) const;
 
 
 };
