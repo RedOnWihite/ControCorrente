@@ -88,9 +88,9 @@ void Conto::salvaDatiSuFile(const std::string &nomeFile) const {
 
 void Conto::transazione(float amount){
     if (amount < 0) {
-        cout << "e' stato prelevato: " << -amount << " soldi dal conto" << endl;
+        cout << "e' stato prelevato: " << -amount << " euro dal conto" << endl;
     } else {
-        cout << "e' stato depositato: " << amount << " soldi sul conto" << endl;
+        cout << "sono stati depositati: " << amount << " euro sul conto" << endl;
     }
     fondi += amount;
 
@@ -111,11 +111,13 @@ void Conto::eliminaTransazione(int id) {
     auto it = record.begin();
     while (it != record.end()) {
         if (it->getId() == id) {
-            it = record.erase(it); // Elimina l'elemento e sposta l'iteratore all'elemento successivo
+            record.erase(it); // Elimina l'elemento
+            return; // Termina prematuramente la funzione
         } else {
             ++it; // Passa all'elemento successivo
         }
     }
+    cout << "Errore: non e' stato trovato l'elemento desiderato" << endl;
 }
 
 //generazione base

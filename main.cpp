@@ -1,7 +1,9 @@
 #include <iostream>
 #include "Conto.h"
-/*versione 1.1 aggiunta di una funzione per eliminazione di una trasazione nell'estratto conto, e aggiunto di un
-attributo che descrive il tipo di transazione ed è stato sistemato un problema con l'incrementazione dei id*/
+/*versione 1.1.1
+ Fixato:
+ -l'eliminazione della transazione migliorato
+ -il menu per la selezione delle azioni */
 
 using namespace std;
 
@@ -13,13 +15,13 @@ int main() {
     cin >> nome;
     Conto conto(nome);
     while (true) {
-        cout << "che azione vuole eseguire?\n1-transazione\n2-visualizza estratto conto\n3-elimina una transazione\n4-termina programma" << endl;
+        cout << "\nche azione vuole eseguire?\n1-transazione\n2-visualizza estratto conto\n3-elimina una transazione\n4-termina programma\n" << endl;
         cin >> value;
         switch (value) {
             case 1: {
-                cout << "cosa vuole fare? 1-prelievo 2-ricarica" << endl;
+                cout << "cosa vuole fare? 1-prelievo 2-ricarica\n" << endl;
                 cin >> value;
-                cout << "quanti soldi" << endl;
+                cout << "quanti euro" << endl;
                 cin >> soldi;
                 switch (value) {
                     case 1: {
