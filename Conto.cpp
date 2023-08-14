@@ -1,7 +1,3 @@
-//
-// Created by Matteo on 09/08/2023.
-//
-
 #include "Conto.h"
 
 using namespace std;

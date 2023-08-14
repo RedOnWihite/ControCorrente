@@ -1,7 +1,3 @@
-//
-// Created by Matteo on 09/08/2023.
-//
-
 #ifndef CONTOCORRENTE_CONTO_H
 #define CONTOCORRENTE_CONTO_H
 

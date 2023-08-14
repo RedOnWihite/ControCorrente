@@ -3,7 +3,7 @@
 /*versione 1.1.1
  Fixato:
  -l'eliminazione della transazione migliorato
- -il menu per la selezione delle azioni */
+ -la grafica del menu per la selezione delle azioni */
 
 using namespace std;
 
