@@ -29,6 +29,7 @@ public:
     void eliminaTransazione(int id);
 
     void salvaDatiSuFile(const std::string &nomeFile) const;
+    void eliminaConto();
 
     string getName();
     string getPassword();
@@ -44,7 +45,6 @@ private:
 
     int generaNuovoId();
     void caricaDatiDaFile(const std::string& nomeFile);
-
 
 };
 

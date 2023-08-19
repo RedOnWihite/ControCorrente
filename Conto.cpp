@@ -24,6 +24,22 @@ Conto::Conto(const string& nomeUtente, const string& password)
     }
 }
 
+void Conto::eliminaConto() {
+    // Chiudi i file e assicurati che non ci siano riferimenti aperti ai file
+
+    // Rimuovi i file "Conto.txt" e "EstrattoConto.txt"
+    string path = nome + "/";
+    filesystem::remove(path + "Conto.txt");
+    filesystem::remove(path + "EstrattoConto.txt");
+
+    // Rimuovi la cartella del conto
+    if (filesystem::remove(path)) {
+        cout << "Il conto è stato eliminato con successo." << endl;
+    } else {
+        cerr << "Errore durante l'eliminazione del conto." << endl;
+    }
+}
+
 void Conto::caricaDatiDaFile(const string& nomeFile) {
     // Caricamento dei dati del conto
     ifstream inputFile(nomeFile + "/Conto.txt");

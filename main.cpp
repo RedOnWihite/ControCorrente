@@ -1,11 +1,6 @@
 #include <iostream>
 #include "Conto.h"
-/*versione 1.2 definitivo è stato sistemato e implementato correttamente il sistema di password
- e l'accesso al prorio conto e impletato una nuova funzione per cambiare il nome del conto e uno per cambiare
- il password
- Fixato:
- - sistamato il contaggio dei fondi del conto
- - sistemato un pericoloo loop quando vengono inseriti dei valori string invece dei int */
+/*versione 1.2.1 è stato aggiunto la possibilita di eliminare un conto */
 using namespace std;
 
 int main() {
@@ -17,7 +12,7 @@ int main() {
     string stringTmp;
 
     while (true) {
-        cout << "Salve, cosa vuole fare:\n1-crea un nuovo conto\n2-accedi al tuo conto" << endl;
+        cout << "\nSalve, cosa vuole fare:\n1-crea un nuovo conto\n2-accedi al tuo conto" << endl;
 
         while (!(cin >> scelta)) {
             cin.clear(); // Ripristina lo stato di cin
@@ -61,8 +56,14 @@ int main() {
     cout << "\n\ninformazioni del conto: \nnome: "<<conto.getName() << "\ntransazioni: " <<conto.getId()<<"\nsaldo contabile: "<< conto.getFondi() << endl;
 
     while (true) {
-        cout << "\nche azione vuole eseguire?\n1-transazione\n2-visualizza estratto conto\n3-elimina una transazione\n4-cambia il nome del conto\n5-cambia il password del conto\n6-termina programma\n" << endl;
-        while (!(cin >> value)) {
+        cout << "\nche azione vuole eseguire?\n"
+                "1-transazione\n"
+                "2-visualizza estratto conto\n"
+                "3-elimina una transazione\n"
+                "4-cambia il nome del conto\n"
+                "5-cambia il password del conto\n"
+                "6-elimina il conto\n"
+                "7-termina programma\n" << endl;        while (!(cin >> value)) {
             cin.clear(); // Ripristina lo stato di cin
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignora il resto dell'input non valido
             cout << "\nInput non valido. Riprova: ";
@@ -120,6 +121,23 @@ int main() {
                 break;
             }
             case 6: {
+                cout << "sei sicuro di volor eliminare il conto?\n1-si 2-no\n" << endl;
+                cin >> scelta;
+                if(scelta==1){
+                    cout << "inserisca il password" << endl;
+                    cin >> stringTmp;
+                    if(conto.getPassword()==stringTmp){
+                        conto.eliminaConto();
+                        exit(0);
+                    }
+                    else{
+                        cout << "password errato" << endl;
+                        break;
+                    }
+                }
+                break;
+            }
+            case 7: {
                 cout << "programma terminato" << endl;
                 conto.salvaDatiSuFile(nome);
                 return 0;
