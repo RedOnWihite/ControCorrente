@@ -30,7 +30,6 @@ void Conto::caricaDatiDaFile(const string& nomeFile) {
     if (!inputFile) {
         cerr << "Errore nell'apertura del file " << nomeFile << endl;
         exit(0);
-        return;
     }
 
     inputFile >> nome;
@@ -118,6 +117,7 @@ void Conto::eliminaTransazione(int id) {
     while (it != record.end()) {
         if (it->getId() == id) {
             record.erase(it); // Elimina l'elemento
+            this->id--;
             return; // Termina prematuramente la funzione
         } else {
             ++it; // Passa all'elemento successivo
@@ -144,16 +144,20 @@ float Conto::getFondi() {
     return fondi;
 }
 
-void Conto::setNome(const std::string &nuovoNome) {
-    const string directory = filesystem::current_path().string();  // Ottieni il percorso della directory corrente
-    const string oldName = nome + "/" + nome + ".txt";  // Nome del file originale con percorso completo
-    const string newName = nome + "/" + nuovoNome + ".txt";    // Nuovo nome desiderato con percorso completo
+#include <filesystem>
+namespace fs = std::filesystem;
 
-    // Utilizza std::rename() per rinominare il file
-    if (rename(oldName.c_str(), newName.c_str()) == 0) {
-        cout << "Il file è stato rinominato con successo." << endl;
-    } else {
-        cerr << "Errore nella rinomina del file." << endl;
+void Conto::changeName(const std::string &nuovoNome) {
+    const fs::path oldPath = fs::current_path() / nome;  // Percorso della cartella originale
+    const fs::path newPath = fs::current_path() / nuovoNome;  // Nuovo percorso desiderato
+
+    try {
+        fs::rename(oldPath, newPath);
+        cout << "Il nome del conto e' stato correttamente modificato in: " << nuovoNome << endl;
+        nome=nuovoNome;
+    } catch (const fs::filesystem_error &e) {
+        cerr << "Errore nella rinomina della cartella: " << e.what() << endl;
+        exit(0);
     }
 }
 
@@ -163,4 +167,8 @@ void Conto::setFondi(float nuoviFondi) {
 
 string Conto::getPassword() {
     return password;
+}
+
+void Conto::changePsw(const string &nuovoPsw) {
+    password=nuovoPsw;
 }
