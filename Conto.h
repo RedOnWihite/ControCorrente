@@ -16,7 +16,9 @@ class Conto {
 public:
     Conto(const string& nomeUtente, const string& password);
 
-    void setNome(const std::string& nuovoNome);
+    void changeName(const std::string& nuovoNome);
+
+    void changePsw(const string& nuovoPsw);
 
     void setFondi(float nuoviFondi);
 
